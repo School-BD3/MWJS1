@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        ul { list-style-type: none; padding-left: 0; }
+        li { padding: 5px; cursor: pointer; }
+        li:hover { background-color: #eee; }
+    </style>
+</head>
+<body>
+
+<h2>Task List</h2>
+<input id="taskInput" placeholder="New task">
+<button id="addBtn">Add</button>
+<ul id="taskList"></ul>
+
+<script>
+    // --- Отримуємо елементи DOM ---
+    const addBtn = document.getElementById("addBtn");
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    // --- Додаємо нове завдання ---
+    addBtn.addEventListener("click", () => {
+        const taskText = taskInput.value.trim(); // прибираємо зайві пробіли
+        if (taskText === "") {
+            alert("Please enter a task!");
+            return;
+        }
+
+        // Створюємо новий li
+        const li = document.createElement("li");
+        li.textContent = taskText;
+
+        // Додаємо li до списку
+        taskList.appendChild(li);
+
+        // Очищаємо input
+        taskInput.value = "";
+        taskInput.focus();
+    });
+
+    // --- Делегування подій: видалення завдання при кліку ---
+    taskList.addEventListener("click", (event) => {
+        if (event.target.tagName === "LI") {
+            if (confirm(`Delete task: "${event.target.textContent}"?`)) {
+                event.target.remove();
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
